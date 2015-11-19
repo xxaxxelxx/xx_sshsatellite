@@ -16,7 +16,7 @@ while true; do
 	echo "$M.xspf" >> files2sync
 	echo "$M.vclt" >> files2sync
     done
-    rsync -a --stats --files-from=files2sync -e 'ssh -p 65522 -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no' sshro@$LOADBALANCER_ADDR:/icecastwebdirectory/ /usr/share/icecast2/web/ | grep -i 'transferred' | grep -w '0' > /dev/null
+    rsync -a --stats --files-from=files2sync -e 'ssh -p 65522 -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no' depot@$LOADBALANCER_ADDR:/depot/ /usr/share/icecast2/web/ | grep -i 'transferred' | grep -w '0' > /dev/null
     if [ $? -ne 0 ]; then
 	touch /tmp/icecast.hup.sem
     fi

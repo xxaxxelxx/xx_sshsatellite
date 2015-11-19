@@ -6,6 +6,12 @@ IC_HOST="$(cat /etc/hosts | grep -iw ${LINKED_CONTAINER} | awk '{print $1}')"
 eval IC_PORT=\$${LINKED_CONTAINER}_ENV_IC_PORT
 eval IC_ADMIN_PASS=\$${LINKED_CONTAINER}_ENV_IC_ADMIN_PASS
 
+
+# decrapting rsa_id
+
+echo "$KEY_DECRYPT_PASS" | openssl des3 -d -in /root/.ssh/rsa_id.crypt -out /root/.ssh/rsa_id -pass stdin
+chmod 600 /root/.ssh/rsa_id
+
 #./synctool.sh $LOOP_SEC $LOADBALANCER_ADDR $IC_ADMIN_PASS $IC_HOST $IC_PORT
 ./synctool.sh $LOOP_SEC $LOADBALANCER_ADDR
 #bash
