@@ -28,7 +28,7 @@ while true; do
     done
     for GZ_LOG in /var/log/icecast2/*.log.*.gz; do
 	test -r $GZ_LOG || continue
-	GZ_LOG_NEW="$(dirname $GZ_LOG)/$(md5sum $GZ_LOG | awk '{print $1}').$(basename $GZ_LOG).unprocessed"
+	GZ_LOG_NEW="$(dirname $GZ_LOG)/$(md5sum $GZ_LOG | awk '{print $1}').$(basename $GZ_LOG)"
 	mv -f $GZ_LOG $GZ_LOG_NEW
 	scp -P 65522 -q -o ConnectTimeout=10 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $GZ_LOG_NEW depot@$LOADBALANCER_ADDR:/depot/ > /dev/null
 	if [ $? -eq 0 ]; then
